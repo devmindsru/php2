@@ -1,0 +1,12 @@
+{
+    "name": "user/devmindsru",
+    "authors": [
+        {
+            "name": "devmindsru",
+            "email": "musannikov.a@mail.ru"
+        }
+    ],
+    "require": {
+      "twig/twig" : "*"
+    }
+}
