@@ -1,0 +1,16 @@
+{
+    "name": "user/devmindsru",
+    "authors": [
+        {
+            "name": "devmindsru",
+            "email": "musannikov.a@mail.ru"
+        }
+    ],
+    "require": {
+        "twig/twig" : "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "^4.8",
+        "phpunit/php-invoker" : "*"
+    }
+}
