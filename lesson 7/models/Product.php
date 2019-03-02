@@ -1,11 +1,13 @@
 <?php
 namespace app\models;
+
 class Product extends DataEntity
 {
     public $id;
     public $name;
     public $description;
     public $price;
+
     /**
      * Product constructor.
      * @param $id
@@ -21,4 +23,4 @@ class Product extends DataEntity
         $this->description = $description;
         $this->price = $price;
     }
-} 
+}

@@ -14,6 +14,7 @@ class Storage
     {
         // Существует ли такой компонент?
         if(!isset($this->items[$key])){
+        if (!isset($this->items[$key])) {
             // Если нет - создаем компонент
             $this->items[$key] = App::call()->createComponent($key);
         }

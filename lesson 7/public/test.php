@@ -1,7 +1,9 @@
 <?php
+
 class Rectangle{
     protected $a;
     protected $b;
+
     /**
      * @return mixed
      */
@@ -9,6 +11,7 @@ class Rectangle{
     {
         return $this->a;
     }
+
     /**
      * @param mixed $a
      */
@@ -16,6 +19,7 @@ class Rectangle{
     {
         $this->a = $a;
     }
+
     /**
      * @return mixed
      */
@@ -23,6 +27,7 @@ class Rectangle{
     {
         return $this->b;
     }
+
     /**
      * @param mixed $b
      */
@@ -31,6 +36,7 @@ class Rectangle{
         $this->b = $b;
     }
 }
+
 class Square{
     /**
      * @param mixed $a
@@ -40,6 +46,7 @@ class Square{
         $this->a = $a;
         $this->b = $a;
     }
+
     /**
      * @param mixed $b
      */
@@ -48,11 +55,15 @@ class Square{
         $this->b = $b;
         $this->a = $b;
     }
+
 }
+
 function foo(Rectangle $r){
     return $r->getA() * $r->getB();
 }
+
+
 $figure = new Square();
 $figure->setA(5);
 $figure->setB(4);
-echo foo($figure); 
+echo foo($figure);

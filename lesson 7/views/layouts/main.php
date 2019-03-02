@@ -5,13 +5,13 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Интернет-магазин</title>
+    <title>Document</title>
 </head>
 <body>
-<div class="header">Интернет-магазин! (Header)</div>
+<div class="header">Это хедер</div>
 <div class="content">
-    <?= $content ?>
+    <?=$content?>
 </div>
-<div class="footer">2019 (с)</div>
+<div class="footer">Это футер</div>
 </body>
 </html>

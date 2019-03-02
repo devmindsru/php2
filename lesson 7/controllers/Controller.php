@@ -1,14 +1,24 @@
 <?php
+
 namespace app\controllers;
+
 use app\services\renderers\IRenderer;
 use app\services\renderers\TemplateRenderer;
-abstract class Controller {
+
+class ActionNotMatchException extends \Exception
+{
+}
+
+abstract class Controller
+{
     private $action;
     private $defaultAction = "index";
     private $layout = "main";
     protected $useLayout = true;
-    /** @var TemplateRenderer  */
+
+    /** @var TemplateRenderer */
     private $renderer = null;
+
     /**
      * Controller constructor.
      * @param null $renderer
@@ -17,28 +27,31 @@ abstract class Controller {
     {
         $this->renderer = $renderer;
     }
+
     public function runAction($action = null)
     {
         $this->action = $action ?: $this->defaultAction;
         $action = "action" . ucfirst($this->action);
-        $this->$action();
+        if (method_exists($this, $action)) {
+            $this->$action();
+        } else {
+            throw new ActionNotMatchException("Action не найден!");
+        }
     }
-    public function render($template, $params = [])
+
+    public function render($template, $params, $layoutParams = [])
     {
-        if($this->useLayout){
-            return $this->renderTemplate("layouts/{$this->layout}",
+        if ($this->useLayout) {
+            return $this->renderTemplate("layouts/{$this->layout},$layoutParams",
                 ['content' => $this->renderTemplate($template, $params)]
             );
-        }else{
+        } else {
             return $this->renderTemplate($template, $params);
         }
     }
-    public function renderTemplate($template, $params = [])
+
+    public function renderTemplate($template, $params)
     {
         return $this->renderer->render($template, $params);
     }
-    public function redirect($url)
-    {
-        header("Location: /{$url}");
-    }
-} 
+}

@@ -1,11 +1,16 @@
 <?php
+
 namespace app\traits;
+
+
 trait TSingleton
 {
     private static $instance = null;
+
     private function __construct(){}
     private function __clone(){}
     private function __wakeup(){}
+
     /**
      * @return static
      */
@@ -15,4 +20,4 @@ trait TSingleton
         }
         return static::$instance;
     }
-} 
+}

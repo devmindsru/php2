@@ -1,38 +1,57 @@
 <?php
+
 namespace app\controllers;
-use app\base\App;
-use app\models\User;
+
+use app\services\Request;
+use app\services\RequestNotMatchException;
+use app\services\AutoloaderNotMatchException;
+
+// Переносим основную логику из index.php во FrontController
+
 class FrontController extends Controller
 {
+    // Какой  контроллер запущен, какой Action выполняется
     private $controller;
     private $action;
+
     private $defaultController = "Product";
+
+    public function redirect() {
+//        $redirect = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . '/' . strtolower($this->defaultController);
+        $redirect = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . '/service/error404';
+        header('location:' . $redirect);
+        exit;
+    }
+
     public function actionIndex()
     {
-        // Обращение к компоненту Request по имени, а не через new Request(), как раньше
-        $rm = App::call()->request;
+        // Request.php
+        try{
+            $rm = new Request();
+        }catch (RequestNotMatchException $e){
+            $this->redirect();
+        }
+
         $controllerName = $rm->getControllerName() ?: $this->defaultController;
         $this->action = $rm->getActionName();
-        $this->controller = App::call()->config['controller_namespaces']
-            . ucfirst($controllerName) . "Controller";
-        $this->checkLogin();
-        $controller = new $this->controller(
-            new \app\services\renderers\TemplateRenderer()
-        );
-        $controller->runAction($this->action);
-    }
-    // Если пользователь авторизован, пускаем дальше, если нет - отправляем на страницу авторизации
-    private function checkLogin(){
-        // Используем сессии, чтобы при каждом заходе пользователя не спрашивать его про авторизацию
-        session_start();
-        // Чтобы не было бесконечного редиректа добавляем условие
-        if($this->controller != "\\" . AuthController::class){
-            // Успешно получен ли текущий пользователь
-            $user = (new User())->getCurrent();
-            // Отправляем на страницу авторизации
-            if(!$user){
-                $this->redirect('auth');
-            }
+
+        $this->controller = CONTROLLERS_NAMESPACE . ucfirst($controllerName) . "Controller";
+
+        // Ловим несуществующий Controller
+        try {
+            $controller = new $this->controller(
+                new \app\services\renderers\TemplateRenderer()
+            );
+        } catch (AutoloaderNotMatchException $e) {
+            $this->redirect();
         }
+
+        // Ловим несуществующий Action
+        try {
+            $controller->runAction($this->action);
+        } catch (ActionNotMatchException $e) {
+            $this->redirect();
+        }
+
     }
-} 
+}

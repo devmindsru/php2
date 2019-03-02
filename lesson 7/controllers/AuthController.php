@@ -7,8 +7,10 @@ class AuthController extends Controller
     {
         // Если приходит POST авторизуем пользователя по логину и паролю
         if($_SERVER['REQUEST_METHOD'] == "POST"){
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
             // Если авторизация прошла успешно, происходит редирект на необходимую страницу
             if((new Auth())->login($_POST['login'], $_POST['pass'])){
+            if ((new Auth())->login($_POST['login'], $_POST['pass'])) {
                 // Редирект в основном контроллере
                 $this->redirect('product');
                 exit;
