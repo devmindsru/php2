@@ -9,7 +9,6 @@ return [
     // Конфигурация отдельных компонентов приложения
     'components' => [
         'db' => [
-            // ::class - зарезервированная константа, обращение к которой вернет полное имя класса
             'class' => \app\services\Db::class,
             'driver' => 'mysql',
             'host' => 'localhost',
@@ -28,4 +27,4 @@ return [
             'class' => \app\services\Request::class
         ]
     ]
-];
+]; 

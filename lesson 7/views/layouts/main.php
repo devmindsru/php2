@@ -8,10 +8,10 @@
     <title>Интернет-магазин</title>
 </head>
 <body>
-<div class="header">Добро-пожаловать в наш интернет-магазин!</div>
+<div class="header">Интернет-магазин! (Header)</div>
 <div class="content">
     <?= $content ?>
 </div>
-<div class="footer">2017 (с) Все права защищены.</div>
+<div class="footer">2019 (с)</div>
 </body>
 </html>
